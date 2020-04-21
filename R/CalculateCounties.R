@@ -1,0 +1,7 @@
+#' @export
+CalculateCounties<-function(IncludedCounties){
+  
+    #Get the total population in the selected region
+    TotalPopulation <-  sum(IncludedCounties$Population)
+    TotalPopulation
+}
