@@ -1,0 +1,31 @@
+Package: CHAD3
+Type: Package
+Title: USAF COVID-19 Shiny App 
+Version: 2020.04.20
+Date: 2020-04-20
+Authors@R: c(
+    person("Trey", "Pujats", role = "aut"),
+    person("Nick", "Forrest", role = "aut"),
+    person("Garret", "Alarcon", role = "aut"),
+    person("Jeff", "Weir",  role = "aut"),
+    person("Jason", "Freels", , "auburngrads@live.com", role = c("aut","cre")))
+Maintainer: Jason Freels <auburngrads@live.com>
+Description: Data sets and support code for USAF COVID-19 Shiny app.
+License: GPL (>= 2)
+Imports: Rcpp (>= 1.0.4),
+         zoo,
+         dplyr,
+         tibble,
+         tidyr,
+         ggplot2,
+         plotly,
+         data.table,
+         stringr,
+         reshape2,
+         shiny,
+         ggrepel,
+         shinydashboard,
+         magrittr
+LinkingTo: Rcpp
+RoxygenNote: 7.1.0
+Encoding: UTF-8
