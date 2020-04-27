@@ -2,7 +2,10 @@
 #' @importFrom dplyr filter
 #' @import ggplot2
 #' @importFrom plotly ggplotly config
-CHIMENationalPlot<-function(SocialDistance, DaysForecasted){
+CHIMENationalPlot<-function(SocialDistance, 
+                            DaysForecasted,
+                            CovidConfirmedCases,
+                            CountyInfo){
     ####################################################################################
   #Get past data in daily hospital use
   #This will use a 5 day hospital stay as the average
@@ -162,7 +165,7 @@ CHIMENationalPlot<-function(SocialDistance, DaysForecasted){
         scale_y_continuous(labels = comma)
     
     
-    projections <- ggplotly(projections)
-    projections <- projections %>% config(displayModeBar = FALSE)
+    projections <- plotly::ggplotly(projections)
+    projections <- projections %>% plotly::config(displayModeBar = FALSE)
     projections
 }
