@@ -4,7 +4,9 @@
 #' @importFrom data.table data.table
 #' @importFrom plotly ggplotly config
 #' @importFrom reshape2 melt
-CovidCasesCumChart<-function(IncludedCounties){
+CovidCasesCumChart<-function(IncludedCounties,
+                             CovidConfirmedCases,
+                             CovidDeaths){
     
     #Find counties in radius
     CovidCountiesCases<-subset(CovidConfirmedCases, CountyFIPS %in% IncludedCounties$FIPS)
@@ -21,5 +23,6 @@ CovidCasesCumChart<-function(IncludedCounties){
     Chart2Data<-cbind.data.frame(ForecastDate,CumDailyCovid,CumDailyDeaths)
     colnames(Chart2Data)<-c("ForecastDate","Total Cases","Total Fatalities")
 
-    Chart2DataSub <- reshape2::melt(data.table::data.table(Chart2Data), id=c("ForecastDate"))
+    return(reshape2::melt(data.table::data.table(Chart2Data), 
+                          id = c("ForecastDate")))
 }
