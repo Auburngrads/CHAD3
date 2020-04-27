@@ -4,7 +4,7 @@
 \alias{CovidCasesCumChart}
 \title{Cumulative COVID cases chart}
 \usage{
-CovidCasesCumChart(IncludedCounties)
+CovidCasesCumChart(IncludedCounties, CovidConfirmedCases, CovidDeaths)
 }
 \description{
 Begin function to create chart of new cases for COVID-19 is a specified region around a specified base
