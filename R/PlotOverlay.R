@@ -2,8 +2,14 @@
 #' @export
 #' @importFrom dplyr filter
 #' @import ggplot2
-PlotOverlay<-function(ChosenBase, IncludedCounties, IncludedHospitals, SocialDistance, DaysProjected, StatisticType){
+PlotOverlay<-function(ChosenBase, 
+                      IncludedCounties, 
+                      IncludedHospitals, 
+                      SocialDistance, 
+                      DaysProjected, 
+                      StatisticType){
     if (StatisticType == "Hospitalizations") {
+      
         
       #Establish initial inputs such as base, counties, and filter IHME model
       BaseState<-dplyr::filter(AFBaseLocations, Base == ChosenBase)
@@ -85,9 +91,22 @@ PlotOverlay<-function(ChosenBase, IncludedCounties, IncludedHospitals, SocialDis
       
       #Now we throw the values above into the SEIAR model, and we create dates for the number of days we decided to forecast as well (place holder for now).
       #With the outputs, we grab the daily hospitalized people and the cumulative hospitalizations. Then we name the columns
-      SEIARProj<-SEIAR_Model_Run(cases, pop, incubationtime, latenttime,doubling,recoverydays,
-                                 socialdistancing,hospitalizationrate, icurate,ventilatorrate,hospitaltime,icutime,
-                                 ventilatortime,daysforecasted,Ro, .5)
+      SEIARProj<-SEIAR_Model_Run(cases, 
+                                 pop, 
+                                 incubationtime, 
+                                 latenttime,
+                                 doubling,
+                                 recoverydays,
+                                 socialdistancing,
+                                 hospitalizationrate, 
+                                 icurate,
+                                 ventilatorrate,
+                                 hospitaltime,
+                                 icutime,
+                                 ventilatortime,
+                                 daysforecasted,
+                                 Ro, 
+                                 .5)
       
       MyDates<-seq(Sys.Date()-(length(CovidCounties)-80), length=daysforecasted, by="1 day")
       DailyData<-data.frame(MyDates, SEIARProj$sir$hos_add)
