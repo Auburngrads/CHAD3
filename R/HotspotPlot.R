@@ -6,7 +6,12 @@
 #' @importFrom tibble rownames_to_column
 #' @importFrom dplyr mutate select distinct lag group_by arrange left_join filter ungroup
 #' @importFrom tidyr gather
-HotspotPlot <- function(CovidConfirmedCases, CovidDeaths, MAJCOMInput){
+HotspotPlot <- function(CovidConfirmedCases, 
+                        CovidDeaths, 
+                        MAJCOMInput,
+                        CountyInfo,
+                        cimd,
+                        AFBaseLocations){
   
   #convert cases and death dataframes to long format. Also add in new_cases in last 1, 3, and 30 days
   tempCases = CovidConfirmedCases %>% 
@@ -154,7 +159,7 @@ HotspotPlot <- function(CovidConfirmedCases, CovidDeaths, MAJCOMInput){
       # annotate("text", x = 3000, y = 1/9, label = 'Cases Shrinking', vjust = 1.5, color = 'blue') +  ##this code broke for some reason
       # annotate("text", x = 3000, y = 1/9, label = 'Cases Growing', vjust = -.5, color = 'red') +
       # geom_text(aes(label = base), size = 4, colour = "black", alpha = .6, check_overlap = TRUE, vjust = "top") + ##if you want text labels for plotly
-      geom_label_repel(aes(new_cases_3_pp, case_growth, label = base),
+      ggrepel::geom_label_repel(aes(new_cases_3_pp, case_growth, label = base),
                        fontface = 'bold', size = 3, fill = "white", color = "#00308f", box.padding = unit(0.75, "lines")) +
       ylab("Growth Rate (# Cases In 3 Days / # Cases in 30 Days)") + #ylim(0,.8) + #geom_line(y = 1/9) +
       xlab("New Cases (per 100,000) in Last 3 Days") + 
@@ -190,7 +195,7 @@ HotspotPlot <- function(CovidConfirmedCases, CovidDeaths, MAJCOMInput){
       # annotate("text", x = 3000, y = 1/9, label = 'Cases Shrinking', vjust = 1.5, color = 'blue') +  ##this code broke for some reason
       # annotate("text", x = 3000, y = 1/9, label = 'Cases Growing', vjust = -.5, color = 'red') +
       # geom_text(aes(label = base), size = 4, colour = "black", alpha = .6, check_overlap = TRUE, vjust = "top") + ##if you want text labels for plotly
-      geom_label_repel(aes(new_cases_3_pp, case_growth, label = base),
+      ggrepel::geom_label_repel(aes(new_cases_3_pp, case_growth, label = base),
                        fontface = 'bold', size = 3, fill = "white", color = "#00308f", box.padding = unit(0.75, "lines")) +
       ylab("Growth Rate (# Cases In 3 Days / # Cases in 30 Days)") + #ylim(0,.8) + #geom_line(y = 1/9) +
       xlab("New Cases (per 100,000) in Last 3 Days") + 
@@ -226,7 +231,7 @@ HotspotPlot <- function(CovidConfirmedCases, CovidDeaths, MAJCOMInput){
       # annotate("text", x = 3000, y = 1/9, label = 'Cases Shrinking', vjust = 1.5, color = 'blue') +  ##this code broke for some reason
       # annotate("text", x = 3000, y = 1/9, label = 'Cases Growing', vjust = -.5, color = 'red') +
       # geom_text(aes(label = base), size = 4, colour = "black", alpha = .6, check_overlap = TRUE, vjust = "top") + ##if you want text labels for plotly
-      geom_label_repel(aes(new_cases_3_pp, case_growth, label = base),
+      ggrepel::geom_label_repel(aes(new_cases_3_pp, case_growth, label = base),
                        fontface = 'bold', size = 3, fill = "white", color = "#00308f", box.padding = unit(0.75, "lines")) +
       ylab("Growth Rate (# Cases In 3 Days / # Cases in 30 Days)") + #ylim(0,.8) + #geom_line(y = 1/9) +
       xlab("New Cases (per 100,000) in Last 3 Days") + 
