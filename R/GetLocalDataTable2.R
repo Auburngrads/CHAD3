@@ -1,5 +1,8 @@
 #' Create Data Table for local statistics
-GetLocalDataTable<-function(IncludedCounties){
+GetLocalDataTable<-function(IncludedCounties,
+                            CovidConfirmedCases,
+                            CovidDeaths){
+    
     CovidCounties<-subset(CovidConfirmedCases, CountyFIPS %in% IncludedCounties$FIPS)
     DeathCounties<-subset(CovidDeaths, CountyFIPS %in% IncludedCounties$FIPS)
     CaseRate <- subset(CovidConfirmedCasesRate, CountyFIPS %in% IncludedCounties$FIPS)
