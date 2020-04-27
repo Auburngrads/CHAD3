@@ -1,6 +1,15 @@
 #' @export
 #' @importFrom dplyr filter
-CalculateIHMEPeak<-function(ChosenBase, IncludedHospitals, radius, StatisticType){
+CalculateIHMEPeak<-function(ChosenBase, 
+                            IncludedHospitals, 
+                            radius, 
+                            StatisticType,
+                            AFBaseLocations,
+                            IHME_Model,
+                            cimd,
+                            CountyInfo,
+                            CovidConfirmedCases,
+                            CovidDeaths){
     
     if (StatisticType == "Hospitalizations") {
       #Creating the stats and dataframes determined by the base we choose to look at.
