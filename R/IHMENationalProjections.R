@@ -1,7 +1,9 @@
 #' @export
 #' @importFrom dplyr group_by summarise
 #' @importFrom plotly ggplotly config
-IHMENationalProjections<-function(DaysProjected){
+IHMENationalProjections<-function(DaysProjected,
+                                  IHME_Model,
+                                  CovidConfirmedCases){
 
         #Get IHME Data upper lower and mean combined by date
         Dataframe1<-IHME_Model %>% 
