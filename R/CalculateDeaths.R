@@ -1,7 +1,9 @@
 #' @export
-CalculateDeaths<-function(IncludedCounties){
+CalculateDeaths<-function(IncludedCounties, CovidDeaths){
   
     #Get total deaths in the selected region
-    CovidCountiesDeath<-subset(CovidDeaths, CountyFIPS %in% IncludedCounties$FIPS)
-    sum(rev(CovidCountiesDeath)[,1])
+    CovidCountiesDeath<-subset(CovidDeaths, 
+                               CountyFIPS %in% IncludedCounties$FIPS)
+    
+    return(sum(rev(CovidCountiesDeath)[,1]))
 }
