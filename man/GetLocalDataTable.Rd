@@ -4,9 +4,9 @@
 \alias{GetLocalDataTable}
 \title{Create Data Table for local statistics}
 \usage{
-GetLocalDataTable(IncludedCounties)
+GetLocalDataTable(IncludedCounties, CovidConfirmedCases, CovidDeaths)
 
-GetLocalDataTable(IncludedCounties)
+GetLocalDataTable(IncludedCounties, CovidConfirmedCases, CovidDeaths)
 }
 \description{
 Create Data Table for local statistics
