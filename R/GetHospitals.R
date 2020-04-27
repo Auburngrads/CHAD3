@@ -1,6 +1,9 @@
 #' @export
 #' @importFrom dplyr filter
-GetHospitals<-function(base,radius){
+GetHospitals<-function(base,
+                       radius,
+                       HospitalInfo,
+                       himd){
   
     #Find number of hospitals in radius
     HospitalInfo$DistanceMiles = himd[,as.character(base)]
