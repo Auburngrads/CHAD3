@@ -1,3 +1,5 @@
+#' SEIAR Model
+#' @export
 seiar<-function(S,E,A,I,R, beta, sigma, gamma_1, gamma_2, N){
     
     Sn <- (-beta * S * (A + I)) + S
