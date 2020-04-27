@@ -5,4 +5,6 @@
 #' @importFrom Rcpp evalCpp
 #' @import shiny 
 #' @import shinydashboard
+#' @import googleVis
+#' @import plyr
 NULL
