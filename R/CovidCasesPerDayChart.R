@@ -1,7 +1,9 @@
 #' @export
 #' @importFrom reshape2 melt
 #' @importFrom data.table data.table
-CovidCasesPerDayChart<-function(IncludedCounties){
+CovidCasesPerDayChart<-function(IncludedCounties,
+                                CovidConfirmedCases,
+                                CovidDeaths){
       
     #Get cases and deaths in selected region
     CovidCountiesCases<-subset(CovidConfirmedCases, CountyFIPS %in% IncludedCounties$FIPS)
@@ -23,5 +25,7 @@ CovidCasesPerDayChart<-function(IncludedCounties){
     Chart1Data<-cbind.data.frame(ForecastDate,DailyNewCasesT,DailyNewDeathsT)
     colnames(Chart1Data)<-c("ForecastDate","New Cases","New Fatalities")
 
-    Chart1DataSub <- reshape2::melt(data.table::data.table(Chart1Data), id=c("ForecastDate"))
+    return(reshape2::melt(data.table::data.table(Chart1Data), 
+                          id = c("ForecastDate")))
+    
 }
