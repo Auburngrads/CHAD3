@@ -5,7 +5,11 @@ CalculateCHIMEPeak<-function(IncludedCounties,
                              ChosenRadius, 
                              SocialDistance, 
                              ProjectedDays, 
-                             StatisticType){
+                             StatisticType,
+                             AFBaseLocations,
+                             CovidDeaths,
+                             CovidConfirmedCasesRate,
+                             CovidConfirmedCases){
   
   if (StatisticType == "Hospitalizations") {
 
