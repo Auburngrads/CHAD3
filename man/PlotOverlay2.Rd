@@ -10,7 +10,13 @@ PlotOverlay2(
   IncludedHospitals,
   SocialDistance,
   DaysProjected,
-  StatisticType
+  StatisticType,
+  AFBaseLocations,
+  IHME_Model,
+  CountyInfo,
+  HospitalInfo,
+  CovidConfirmedCases,
+  CovidDeaths
 )
 }
 \description{
