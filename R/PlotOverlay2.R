@@ -4,7 +4,19 @@
 #'          need the data.frame from overlay in the report
 #' @export
 #' @importFrom dplyr filter
-PlotOverlay2<-function(ChosenBase, IncludedCounties, IncludedHospitals, SocialDistance, DaysProjected, StatisticType){
+PlotOverlay2<-function(ChosenBase, 
+                       IncludedCounties, 
+                       IncludedHospitals, 
+                       SocialDistance, 
+                       DaysProjected, 
+                       StatisticType,
+                       AFBaseLocations,
+                       IHME_Model,
+                       CountyInfo,
+                       HospitalInfo,
+                       CovidConfirmedCases,
+                       CovidDeaths){
+  
   if (StatisticType == "Hospitalizations") {
     
     #Creating the stats and dataframes determined by the base we choose to look at.
