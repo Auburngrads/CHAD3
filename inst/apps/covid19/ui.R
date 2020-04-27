@@ -11,7 +11,10 @@
 ##############################################################################################################################################     
 
 
+
+
 # Begin User Interface ------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 #Build UI
@@ -23,7 +26,7 @@ ui <- tagList(
                   
                  # Step One - Header
                  ###################################################################################################################################################
-                  dashboardHeader(title = div(img(src="AFIT_Emblem_Blue.png",height = '50',width = '110')),
+                  dashboardHeader(title = div(img(src=base64enc::dataURI(file="www/7_other_resources/AFIT_Emblem_Blue.png", mime="image/png") ,height = '50',width = '110')),
                                   titleWidth = 300,
                                   dropdownMenu( 
                                       icon = tags$div(HTML('<font size = "5" color = "blue" font-weight:"bold" >More Information</font>  <i class="fa fa-info-circle" style = "font-size:18px;"></i> <body style="background-color:powderblue;"></body>')),
@@ -45,21 +48,23 @@ ui <- tagList(
                   # Step Two - Sidebar
                   ###################################################################################################################################################
                   dashboardSidebar(width = 300,
-                                   sidebarMenu(
-                                       selectInput(
-                                           "Base",
-                                           "Choose your base:", 
-                                           list(`Installation` = sort(BaseList) ), 
-                                           selectize = FALSE),
-                                       sliderInput("Radius",
-                                                   "Choose your local radius (miles):",
-                                                   min = 10,
-                                                   max = 100,
-                                                   value = 50),
-                                       br(),
+                                   sidebarMenu(id="tabs",
+                                               tags$p(paste0("* Current as of ",format(Sys.Date(),format = "%d %B %Y")," at 0600 EST *")),
+                                               conditionalPanel(condition="input.tabselected>=3",
+                                                                selectInput(
+                                                                            "Base",
+                                                                            "Choose your base:", 
+                                                                            list(`Installation` = sort(BaseList)), 
+                                                                            selectize = FALSE),
+                                                                sliderInput("Radius",
+                                                                            "Choose your local radius (miles):",
+                                                                            min = 10,
+                                                                            max = 100,
+                                                                            value = 50)
+                                                                ),
                                        
-                                       menuItem(
-                                           "MAJCOM Summary Inputs",
+                                       conditionalPanel(condition="input.tabselected==1",
+                                                        "MAJCOM Summary Inputs",
                                            tabName = "MAJCOMsummary",
                                            icon = icon("sliders-h"),
                                            div(id = "single", style="display: none;", numericInput("tckt", "Ticket Number : ", 12345,  width = 300)),
@@ -75,7 +80,8 @@ ui <- tagList(
                                            radioButtons("SummaryModelType",
                                                         "Summary Plot Model: ",
                                                         c("IHME"="IHME",
-                                                          "CHIME"="CHIME")),
+                                                          "CHIME"="CHIME"),
+                                                        selected = "CHIME"),
                                            radioButtons("SummaryForecast",
                                                         "Choose Days Forecasted: ",
                                                         c('Today'='Today',
@@ -85,9 +91,8 @@ ui <- tagList(
                                                           "30 Days"="Thirty"))
                                            
                                        ),
-                                       br(),
-                                       menuItem(
-                                           "Current Local Health Inputs",
+                                       conditionalPanel(condition="input.tabselected==3",
+                                                        "Current Local Health Inputs",
                                            tabName = "localHealthInput",
                                            icon = icon("map-marker-alt"),
                                            div(id = "single", style="display: none;", numericInput("tckt", "Ticket Number : ", 12345,  width = 300)),
@@ -95,9 +100,8 @@ ui <- tagList(
                                                         c("County"="County",
                                                           "State"="State"))
                                        ),
-                                       br(),
-                                       menuItem(
-                                           "Local Health Projection Inputs",
+                                       conditionalPanel(condition="input.tabselected==4",
+                                                        "Local Health Projection Inputs",
                                            tabName = "localHealthProj",
                                            icon = icon("sliders-h"),
                                            div(id = "single", style="display: none;", numericInput("tckt", "Ticket Number : ", 12345,  width = 300)),
@@ -109,30 +113,44 @@ ui <- tagList(
                                                        min = 7,
                                                        max = 30,
                                                        value = 14),
-                                           checkboxGroupInput("SocialDistanceValue", "Local Social Distancing Actions: ",
-                                                              c("Close Schools" = "CS",
-                                                                "Businesses Telework" = "CB",
-                                                                "Social Distance" = "SD"))
+                                           # checkboxGroupInput("SocialDistanceValue", "Local Social Distancing Actions: ",
+                                           #                     c("Close Schools" = "CS",
+                                           #                       "Businesses Telework" = "CB",
+                                           #                       "Social Distance" = "SD")),
+                                           checkboxGroupInput("ModelSelectionValue","Forecasting Model(s): ",
+                                                              c("IHME"="IHME",
+                                                                "LANL"="LANL",
+                                                                "CHIME SC"="CHIME1",
+                                                                "CHIME NE"="CHIME2",
+                                                                "CHIME SC+NE"="CHIME3",
+                                                                "CHIME SD"="CHIME4",
+                                                                "CHIME SC+SD"="CHIME5",
+                                                                "CHIME NE+SD"="CHIME6",
+                                                                "CHIME SC+NE+SD"="CHIME7",                                                                                                                                
+                                                                "Columbia No Intervetion"="CUNI",
+                                                                "Columbia 20% SC Reduction"="CU20SC",
+                                                                "Columbia 30% SC Reduction"="CU30SC",
+                                                                "Columbia 40% SC Reduction"="CU40SC")),
+                                           actionLink("selectall","Select All")
                                        ),
-                                       br(),
-                                       menuItem(
-                                           "National Health Projection Inputs",
-                                           tabName = "natHealthProj",
-                                           icon = icon("sliders-h"),
-                                           div(id = "single", style="display: none;", numericInput("tckt", "Ticket Number : ", 12345,  width = 300)),
-                                           sliderInput("proj_days_national",
-                                                       "Projection days:",
-                                                       min = 7,
-                                                       max = 30,
-                                                       value = 14),
-                                           checkboxGroupInput("SocialDistanceValueNational", "National Social Distancing Actions: ",
-                                                              c("Close Schools" = "CSN",
-                                                                "Businesses Telework" = "CBN",
-                                                                "Social Distance" = "SDN"))
-                                       ),
-
                                        br(),
                                        
+                                       # menuItem(
+                                       #     "National Health Projection Inputs",
+                                       #     tabName = "natHealthProj",
+                                       #     icon = icon("sliders-h"),
+                                       #     div(id = "single", style="display: none;", numericInput("tckt", "Ticket Number : ", 12345,  width = 300)),
+                                       #     sliderInput("proj_days_national",
+                                       #                 "Projection days:",
+                                       #                 min = 7,
+                                       #                 max = 30,
+                                       #                 value = 14),
+                                       #     checkboxGroupInput("SocialDistanceValueNational", "National Social Distancing Actions: ",
+                                       #                        c("Close Schools" = "CSN",
+                                       #                          "Businesses Telework" = "CBN",
+                                       #                          "Social Distance" = "SDN"))
+                                       # ),
+
                                        div(style="text-align:center", tags$hr(style="border-color: #444;"), "Generate & Download Report:"),
                                        br(),
                                        fluidRow(
@@ -141,28 +159,8 @@ ui <- tagList(
                                            align = "center"
                                        )
 
-                                       # fluidRow(
-                                       #     valueBox("LOW RISK", subtitle ="Mission Risk **notional ex.**",color= "green",width = 12)
-                                       # ),
-                                       # fluidRow(h()
-                                       #     valueBox("MEDIUM RISK", subtitle ="Installation Health Risk **notional ex.**",color= "yellow", width = 12)
-                                       # ),
-                                       # fluidRow(
-                                       #     valueBox("HIGH RISK", subtitle ="Local Health Risk **notional ex.**",color= "red",width = 12)
-                                       # )
-                                   ),
-                                   tags$footer(
-                                       tags$p(paste0("* Current as of ",format(Sys.Date(),format = "%d %B %Y")," at 0600 EST *")),
-                                       style = "
-                                       position: fixed;
-                                       bottom: 0;
-                                       width: 90%;
-                                       color: #8aacc8;
-                                       padding: 20px;
-                                       font-size: 15px;
-                                       "
+                                      
                                    )
-                                   
                   ),
                   
                   
@@ -185,11 +183,12 @@ ui <- tagList(
                                    $("header").find("nav").append(\'<span class="myClass"> COVID-19 Health Assessment Dashboard Beta v0.6</span>\');
                                    })
                                    ')),
-                      tabsetPanel(id = "tabs",
+                      tabsetPanel(id = "tabselected",
                                   
                                   ####### BEGIN SUMMARY TAB #########
                                   # Mission Risk ------------------------------------------------------------
                                   tabPanel(
+                                      value = 1,
                                       title = "MAJCOM Summary",
                                       fluidRow(
                                           box(plotlyOutput("SummaryTabChoro", height = 600, width = 'auto')),
@@ -210,10 +209,11 @@ ui <- tagList(
                                   
                                   # Summary Tab -------------------------------------------------------------
                                   tabPanel(
+                                      value = 2,
                                       title = "National Summary",
 
                                       box(title = "National Impact Map",solidHeader = T, align = "center", htmlOutput("SummaryPlot"),height=700,width=1200),
-                                      box(title = "National Statistics", solidHeader=T, align = "left", column(width = 12, DT::dataTableOutput("NationalDataTable1"), style = "height:240px;overflow-y: scroll;overflow-x:scroll"),width = 13)
+                                      box(title = "National Statistics", solidHeader=T, align = "left", column(width = 12, DT::dataTableOutput("NationalDataTable1"), style = "height:400px;overflow-y: scroll;overflow-x:scroll"),width = 13, height = 500)
                                       
                                   ),
                                   ####### END SUMMARY TAB #######
@@ -221,18 +221,21 @@ ui <- tagList(
                                   
                                   # Current Local Health ----------------------------------------------------
                                   tabPanel(
+                                      value = 3,
                                       title = "Current Local Health",
                                       fluidRow(
                                           # A static valueBox
-                                          valueBoxOutput("CovidCases"),
-                                          valueBoxOutput("LocalCovidDeaths"),
-                                          valueBoxOutput("HospitalUtilization")
+                                          valueBoxOutput("CovidCases", width = 3),
+                                          valueBoxOutput("CaseChangeLocal", width = 3),
+                                          valueBoxOutput("CasesPer1000", width = 3),
+                                          valueBoxOutput("HospitalUtilization", width = 3)
                                       ),
                                       fluidRow(
-                                          tags$style(".small-box{border-radius:10px;}"),
-                                          valueBoxOutput("CaseChangeLocal", width = 4),
-                                          valueBoxOutput("DeathChangeLocal", width = 4),
-                                          valueBoxOutput("HospUtlzChange", width = 4)
+                                          valueBoxOutput("LocalCovidDeaths", width = 3),
+                                          valueBoxOutput("DeathChangeLocal", width = 3),
+                                          valueBoxOutput("CaseDbRate", width = 3),
+                                          valueBoxOutput("Rt_Estimate", width = 3)
+                                          
                                       ),
                                       fluidRow( 
                                           box(title = "Daily Reports",plotlyOutput("LocalHealthPlot1",height = 300)),
@@ -248,6 +251,7 @@ ui <- tagList(
                                   ####### BEGIN LOCAL PROJECTION TAB #########
                                   # Local Health Projections ------------------------------------------------
                                   tabPanel(
+                                      value= 4,
                                       title = "Local Health Projections",
                                       fluidRow(
                                           valueBoxOutput("TotalPopulation"),
@@ -256,56 +260,66 @@ ui <- tagList(
                                           #valueBoxOutput("TotalPopulation"),
                                           #valueBoxOutput("IHMEMinMax"),
                                           #valueBoxOutput("CHIMEMinMax")
-                                          
                                       ),
-                                      fluidRow(
-                                          box(plotlyOutput("IHME_State_Hosp",height = 400)),
-                                          box(plotlyOutput("SEIARProjection"),height = 400)),
-                                          box(plotlyOutput("OverlayPlots"), width =  900)
+                                      # fluidRow(
+                                      #     box(plotlyOutput("IHME_State_Hosp",height = 400)),
+                                      #     box(plotlyOutput("SEIARProjection"),height = 400)),
+                                      box(plotlyOutput("OverlayPlots",height=700, width=1500))
                                   ),
                                   ####### END PROJECTION TAB #######
                                   
                                   ####### BEGIN National PROJECTION TAB #########
                                   # National Health Projections ------------------------------------------------
-                                  tabPanel(
-                                      title = "National Health Projections",
-                                      # fluidRow(
-                                      #     valueBoxOutput("TotalPopulation_National"),
-                                      #     valueBoxOutput("CHIMEPeakDate_National"),
-                                      #     valueBoxOutput("IHMEPeakDate_National")
-                                      #),
-                                      fluidRow(
-                                          box(plotlyOutput("IHMENationaProj",height = 400)),
-                                          box(plotlyOutput("CHIMENationalProj"),height = 400)),
-                                          box(plotlyOutput("NationalPlotOverlay"), width =  900)
-                                  )
+                                  # tabPanel(
+                                  #     title = "National Health Projections",
+                                  #     # fluidRow(
+                                  #     #     valueBoxOutput("TotalPopulation_National"),
+                                  #     #     valueBoxOutput("CHIMEPeakDate_National"),
+                                  #     #     valueBoxOutput("IHMEPeakDate_National")
+                                  #     #),
+                                  #     fluidRow(
+                                  #         box(plotlyOutput("IHMENationaProj",height = 400)),
+                                  #         box(plotlyOutput("CHIMENationalProj"),height = 400)),
+                                  #         box(plotlyOutput("NationalPlotOverlay"), width =  900)
+                                  # )
                                   ####### END PROJECTION TAB #######
 
                                   ####### BEGIN Aircrew TAB #########
                                   # Air Force Community Projections ------------------------------------------------------------
-                                  # tabPanel(
-                                  #     title = "Air Force Community Projections",
-                                  #     box(title = "Projected Community Epidemic",
-                                  #         solidHeader=T, 
-                                  #         align = "left", 
-                                  #         column(width = 12, 
-                                  #                plotlyOutput("ProjectedEpidemicTable"), 
-                                  #                style = "height:720px;overflow-y: scroll"), 
-                                  #         height = 900, 
-                                  #         width =13
-                                  # ))
+                                  tabPanel(
+                                      value = 5,
+                                      title = "AMC Infection Model Projections",
+                                      fluidRow(
+                                          valueBoxOutput("ProjPeakInfDate"),
+                                          valueBoxOutput("ProjTotInf"),
+                                          valueBoxOutput("ProjTotDeaths")
+                                      ),
+                                      fluidRow(
+                                          column(4,
+                                                 includeMarkdown("www/6_load_info_docs/AMC_Desc.md")),
+                                         
+                                              box(title = "Projected Community Epidemic Curve",
+                                                  solidHeader=T,
+                                                  align = "left",
+                                                  column(width = 12,
+                                                         plotlyOutput("ProjectedEpidemicTable"),
+                                                         style = "height:720px;overflow-y: scroll"),
+                                                  height = 500,
+                                                  width =8
+                                              )
+                                          )
+                                  )
+                                  
 
                                       ) #close dash body
 
-                                  
-                                  
-                                  
                       )
                   )
     )
     
 
               
+
 
 
 
