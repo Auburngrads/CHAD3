@@ -1,7 +1,10 @@
+#' Get total confirmed cases in the selected region
 #' @export
-CalculateCovid<-function(IncludedCounties){
+CalculateCovid<-function(IncludedCounties, CovidConfirmedCases){
   
-    #Get total confirmed cases in the selected region
-    CovidCounties<-subset(CovidConfirmedCases, CountyFIPS %in% IncludedCounties$FIPS)
-    sum(rev(CovidCounties)[,1])
+    CovidCounties = subset(CovidConfirmedCases, 
+                           CountyFIPS %in% IncludedCounties$FIPS)
+    
+    return(sum(rev(CovidCounties)[,1]))
+    
 }
