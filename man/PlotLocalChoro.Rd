@@ -4,7 +4,14 @@
 \alias{PlotLocalChoro}
 \title{Create plot of Covid Cases by County}
 \usage{
-PlotLocalChoro(IncludedCounties, ChosenBase, TypofPlot)
+PlotLocalChoro(
+  IncludedCounties,
+  ChosenBase,
+  TypofPlot,
+  AFBaseLocations,
+  county_df,
+  PlottingCountyData
+)
 }
 \description{
 Create plot of Covid Cases by County
