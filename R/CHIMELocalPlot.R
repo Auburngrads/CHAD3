@@ -4,7 +4,14 @@
 #' @import ggplot2
 #' @importFrom plotly ggplotly config
 #' @importFrom reshape2 melt
-CHIMELocalPlot<-function(SocialDistance, ForecastedDays, IncludedCounties, StatisticType){
+CHIMELocalPlot<-function(SocialDistance, 
+                         ForecastedDays, 
+                         IncludedCounties, 
+                         StatisticType,
+                         CovidConfirmedCases,
+                         CountyHospRate,
+                         CovidDeaths,
+                         CovidConfirmedCasesRate){
     
     if (StatisticType == "Hospitalizations") {
         
