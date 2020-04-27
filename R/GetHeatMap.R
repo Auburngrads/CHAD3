@@ -4,7 +4,9 @@
 GetHeatMap<-function(MAJCOMChoice,
                      ModelChoice,
                      ForecastChoice,
-                     Stat){
+                     Stat,
+                     HeatMapForecast,
+                     HeatMapForecastCases){
   
   HeatMap <- HeatMapForecast
   Banner <- "Projected Daily New Hospitalizations"
