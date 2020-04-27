@@ -1,5 +1,8 @@
 #' @export
-HospitalIncreases<-function(IncludedCounties){
+HospitalIncreases<-function(IncludedCounties,
+                            HospUtlzCounty,
+                            CovidConfirmedCases,
+                            CountyHospRate){
     
   #Find hospitals in selected region
   hospCounty <- subset(HospUtlzCounty, fips %in% IncludedCounties$FIPS)
@@ -21,4 +24,5 @@ HospitalIncreases<-function(IncludedCounties){
   Utilz<- round(((StillHospital) / TotalBeds+baseUtlz) * 100,0)
     
   paste(Utilz," %", sep = "") 
+  
 }
