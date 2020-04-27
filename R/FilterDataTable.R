@@ -2,6 +2,7 @@
 #' @description This just filters the data table based on IHME or CHIME
 #' @export
 FilterDataTable<-function(dt,ModelType,ForecastType){
+  
   if (ModelType == "IHME") {
     if (ForecastType == "Today"){
       cols<-c(1:10)
