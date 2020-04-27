@@ -5,7 +5,14 @@ IHMELocalProjections<-function(MyCounties,
                                IncludedHospitals, 
                                ChosenBase, 
                                StatisticType, 
-                               DaysProjected){
+                               DaysProjected,
+                               AFBaseLocations,
+                               IHME_Model,
+                               HospUtlzCounty,
+                               CovidConfirmedCases,
+                               CovidDeaths,
+                               CountyInfo,
+                               CountyHospRate){
   
     if (StatisticType == "Hospitalizations") {
       
