@@ -1,7 +1,11 @@
 #' @export
 #' @importFrom dplyr group_by summarise filter
 #' @importFrom plotly ggplotly
-NationalOverlayPlot<-function(SocialDistance, DaysForecasted){
+NationalOverlayPlot<-function(SocialDistance, 
+                              DaysForecasted,
+                              IHME_Model,
+                              CovidConfirmedCases,
+                              CountyInfo){
     
     
   #Get IHME Data upper lower and mean combined by date
